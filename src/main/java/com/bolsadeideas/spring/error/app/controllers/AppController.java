@@ -1,5 +1,6 @@
 package com.bolsadeideas.spring.error.app.controllers;
 
+import com.bolsadeideas.spring.error.app.errors.UsuarioNoEncontrado;
 import com.bolsadeideas.spring.error.app.models.domain.Usuario;
 import com.bolsadeideas.spring.error.app.services.UsuarioService;
 
@@ -35,7 +36,12 @@ public class AppController {
 
   @GetMapping("/ver/{id}")
   public String ver(@PathVariable Integer id, Model model) {;
-    Usuario usuario = usuarioService.buscarPorId(id);
+    // Anterior mente obteniamos por metodo buscarPorId con if ahora lo hacemos con Optional que nos permite obtener un valor o null
+    // Usuario usuario = usuarioService.buscarPorId(id);
+    // if (usuario == null) {
+    //   throw new UsuarioNoEncontrado(id.toString());
+    // }
+    Usuario usuario = usuarioService.buscarPorIdOptional(id).orElseThrow(() -> new UsuarioNoEncontrado(id.toString()));
     model.addAttribute("usuario", usuario);
     return "ver";
   }

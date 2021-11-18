@@ -2,6 +2,7 @@ package com.bolsadeideas.spring.error.app.services;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.bolsadeideas.spring.error.app.models.domain.Usuario;
 
@@ -39,5 +40,10 @@ public class UsuarioServiceImplement implements UsuarioService {
     }
     return usuario;
   }
-  
+
+  @Override
+  public Optional<Usuario> buscarPorIdOptional(Integer id) {
+    Usuario usuario = this.buscarPorId(id);
+    return Optional.ofNullable(usuario);
+  }
 }

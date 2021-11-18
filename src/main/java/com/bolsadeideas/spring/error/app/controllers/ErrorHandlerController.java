@@ -1,5 +1,7 @@
 package com.bolsadeideas.spring.error.app.controllers;
 
+import com.bolsadeideas.spring.error.app.errors.UsuarioNoEncontrado;
+
 import org.springframework.http.HttpStatus;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -23,5 +25,14 @@ public class ErrorHandlerController {
     model.addAttribute("errorCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
     model.addAttribute("timestamp", System.currentTimeMillis());
     return "error/formato-numero";
+  }
+
+  @ExceptionHandler(UsuarioNoEncontrado.class)
+  public String numberFormatError(UsuarioNoEncontrado e, Model model) {
+    model.addAttribute("error","Error usuario no encontrado");
+    model.addAttribute("message", e.getMessage());
+    model.addAttribute("errorCode", HttpStatus.INTERNAL_SERVER_ERROR.value());
+    model.addAttribute("timestamp", System.currentTimeMillis());
+    return "error/UnuarioNoFount";
   }
 }
